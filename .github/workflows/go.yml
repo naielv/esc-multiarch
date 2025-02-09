@@ -17,16 +17,10 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: '1.20'
-    - name: deps
-      run: make deps
-    - name: Build arm
-      run: CC=arm-linux-gnueabi-cc CGO_ENABLED=1 GOOS=linux GOARCH=arm GOARM=6 go build -a -tags netgo -o esc-arm cmd/esc/main.go
-
-    - name: Build arm64
-      run: CC=arm-linux-gnueabi-cc CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -a -tags netgo -o esc-arm64 cmd/esc/main.go
-
-    - name: Build amd64
-      run: CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -a -tags netgo -o esc-amd64 cmd/esc/main.go
+    - name: Install arm compilers
+      run: sudo apt-get install -y gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
+    - name: Build all
+      run: make all
     
     - uses: ncipollo/release-action@v1
       with:

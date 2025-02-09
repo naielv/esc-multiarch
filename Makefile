@@ -1,13 +1,16 @@
 
-all: clean build
+all: deps clean build
 
-build: esc-amd64 esc-arm
+build: esc-amd64 esc-arm esc-arm64
 
 esc-amd64: 
 	CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -a -tags netgo -o esc-amd64 cmd/esc/main.go
 
 esc-arm: 
-	CC=arm-linux-gnueabi-cc CGO_ENABLED=1 GOOS=linux GOARCH=arm GOARM=6 go build -a -tags netgo -o esc-arm cmd/esc/main.go
+	CC=arm-linux-gnueabi-gcc CGO_ENABLED=1 GOOS=linux GOARCH=arm GOARM=6 go build -a -tags netgo -o esc-arm cmd/esc/main.go
+
+esc-arm64: 
+	CC=aarch64-linux-gnu-gcc CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -a -tags netgo -o esc-arm64 cmd/esc/main.go
 
 docker: docker-amd64 docker-arm
 
