@@ -7,10 +7,10 @@ esc-amd64:
 	CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -a -tags netgo -o esc-amd64 cmd/esc/main.go
 
 esc-arm: 
-	CC=arm-linux-gnueabi-gcc CGO_ENABLED=1 GOOS=linux GOARCH=arm GOARM=6 go build -a -tags netgo -o esc-arm cmd/esc/main.go
+	CC=arm-linux-gnueabi-gcc CGO_ENABLED=0 GOOS=linux GOARCH=arm GOARM=6 go build -a -tags netgo -o esc-arm cmd/esc/main.go
 
 esc-arm64: 
-	CC=aarch64-linux-gnu-gcc CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -a -tags netgo -o esc-arm64 cmd/esc/main.go
+	CC=aarch64-linux-gnu-gcc CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -a -tags netgo -o esc-arm64 cmd/esc/main.go
 
 docker: docker-amd64 docker-arm
 
