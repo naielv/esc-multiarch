@@ -1,6 +1,6 @@
 module github.com/naielv/esc-multiarch
 
-go 1.23.4
+go 1.23
 
 require (
 	github.com/cjoudrey/gluahttp v0.0.0-20201111170219-25003d9adfa9 // indirect
