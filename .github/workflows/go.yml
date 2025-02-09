@@ -1,0 +1,37 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Go
+
+on:
+  release:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.20'
+
+    - name: Build arm
+      run: CC=arm-linux-gnueabi-cc CGO_ENABLED=1 GOOS=linux GOARCH=arm GOARM=6 go build -a -tags netgo -o esc-arm cmd/esc/main.go
+
+    - name: Build arm64
+      run: CC=arm-linux-gnueabi-cc CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -a -tags netgo -o esc-arm64 cmd/esc/main.go
+
+    - name: Build amd64
+      run: CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -a -tags netgo -o esc-amd64 cmd/esc/main.go
+    
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "esc-arm,esc-arm64,esc-amd64"
+        prerelease: true
+        allowUpdates: true
+        omitBodyDuringUpdate: true
+        omitPrereleaseDuringUpdate: true
+
