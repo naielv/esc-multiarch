@@ -17,7 +17,8 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: '1.20'
-
+    - name: deps
+      run: make deps
     - name: Build arm
       run: CC=arm-linux-gnueabi-cc CGO_ENABLED=1 GOOS=linux GOARCH=arm GOARM=6 go build -a -tags netgo -o esc-arm cmd/esc/main.go
 
